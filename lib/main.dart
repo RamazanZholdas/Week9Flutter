@@ -147,7 +147,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.green,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SecondRoute()),
+                            );
+                          },
                           padding: const EdgeInsets.all(10.0),
                           color: Colors.white,
                           textColor: Colors.black,
@@ -428,6 +433,120 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
+  Padding getTextForNames(String str) {
+    return Padding(
+      padding: const EdgeInsets.only(),
+      child: SizedBox(
+        width: 50,
+        child: Text(
+          str
+        ),
+      ),
+    );
+  }
+
+  Padding getTextForPlace(String first, second) {
+    return Padding(
+      padding: const EdgeInsets.only(),
+      child: Column(
+        children: [
+          Text(first),
+          Text(second, style: const TextStyle(fontSize: 10),),
+        ],
+      ),
+    );
+  }
+
+  ElevatedButton getButton(bool on) {
+    if (on) {
+      return ElevatedButton(
+        onPressed: () {},
+        child: const Text('ONLINE'),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          fixedSize: const Size(100, 20)
+        ),
+      );
+    } else {
+      return ElevatedButton(
+          onPressed: () {},
+          child: const Text('OFFLINE', style: TextStyle(color: Colors.white),),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            fixedSize: const Size(100, 20)
+        ),
+      );
+    }
+  }
+
+  Padding getRow(String name, first, second, bool on) {
+    return Padding(
+      padding: const EdgeInsets.only(left:36),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          getTextForNames(name),
+          getTextForPlace(first, second),
+          getButton(on),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Пассажиры", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.green,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 15),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Text('Имя', style: TextStyle(fontSize: 18),),
+                Text('Место', style: TextStyle(fontSize: 18),),
+                Text('Тип', style: TextStyle(fontSize: 18),),
+              ],
+            ),
+            getRow('Aigerim', '0 A', 'Верхний', false),
+            getRow('Arlan', '0 B', 'Верхний', false),
+            getRow('ASSEL', '1', 'Нижниый', true),
+            getRow('Temir', '1', 'Верхний', true),
+            const Padding(
+              padding: EdgeInsets.all(15),
+              child: Center(
+                child: Text('Свободные места', style: TextStyle(fontSize: 18),)
+              ),
+            ),
+            getRow('Нет Имени', '0 A', 'Нижниый', true),
+            getRow('Нет Имени', '0 B', 'Верхний', true),
+            getRow('Нет Имени', '2', 'Нижниый', true),
+            getRow('Нет Имени', '0 A', 'Нижниый', true),
+          ],
+        ),
+      )
     );
   }
 }
